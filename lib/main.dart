@@ -55,7 +55,6 @@ class _MyHomePageState extends State<MyHomePage> {
             keyboardType: TextInputType.name,
             onChanged: _updateCipherText,
           ),
-          // _createDropdown(_fromValue.name, _updateFromConversion),
         ],
       ),
     );
@@ -64,9 +63,6 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // This is the widget that accepts text input. In this case, it
-          // accepts numbers and calls the onChanged property on update.
-          // You can read more about it here: https://flutter.io/text-input
           TextField(
             // key: _inputKey,
             // style: Theme.of(context).textTheme.display1,
@@ -78,13 +74,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 borderRadius: BorderRadius.circular(0.0),
               ),
             ),
-            // Since we only want numerical input, we use a number keyboard. There
-            // are also other keyboards for dates, emails, phone numbers, etc.
             keyboardType: TextInputType.name,
             // onChanged: _updateInputValue,
             onChanged: _updateKeyText,
+            // labelStyle: Theme.of(context).textTheme.display1,
           ),
-          // _createDropdown(_fromValue.name, _updateFromConversion),
         ],
       ),
     );
@@ -96,7 +90,6 @@ class _MyHomePageState extends State<MyHomePage> {
         children: [
           InputDecorator(
             child: Text(
-              // _convertedValue,
               // "Output",
               result,
               // style: Theme.of(context).textTheme.display1,
@@ -109,7 +102,6 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
           ),
-          // _createDropdown(_toValue.name, _updateToConversion),
         ],
       ),
     );
@@ -117,7 +109,7 @@ class _MyHomePageState extends State<MyHomePage> {
     final button = RaisedButton(
       onPressed: () {
         setState(() {
-          result = Vigenere().decrypt(cipherText, key);
+          result = Vigenere.decrypt(cipherText, key);
           print("rseult");
           print(result);
         });
@@ -148,16 +140,7 @@ class _MyHomePageState extends State<MyHomePage> {
       if (input == null || input.isEmpty) {
         cipherText = '';
       } else {
-        // Even though we are using the numerical keyboard, we still have to check
-        // for non-numerical input such as '5..0' or '6 -3'
-        try {
-          // _showValidationError = false;
-          cipherText = input;
-          // _updateConversion();
-        } on Exception catch (e) {
-          print('Error: $e');
-          // _showValidationError = true;
-        }
+        cipherText = input;
       }
     });
   }
@@ -167,16 +150,7 @@ class _MyHomePageState extends State<MyHomePage> {
       if (input == null || input.isEmpty) {
         cipherText = '';
       } else {
-        // Even though we are using the numerical keyboard, we still have to check
-        // for non-numerical input such as '5..0' or '6 -3'
-        try {
-          // _showValidationError = false;
-          key = input;
-          // _updateConversion();
-        } on Exception catch (e) {
-          print('Error: $e');
-          // _showValidationError = true;
-        }
+        key = input;
       }
     });
   }

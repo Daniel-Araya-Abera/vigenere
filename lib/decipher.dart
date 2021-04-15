@@ -1,5 +1,9 @@
 class Vigenere {
-  String decrypt(String cipherText, String key) {
+  static String decrypt(String cipherText, String key) {
+    if (key.length == 0) {
+      return cipherText;
+    }
+
     int currKeyIndex = 0;
     String res = "";
     var starts = "Aa";
