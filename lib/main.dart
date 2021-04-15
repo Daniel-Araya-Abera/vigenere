@@ -32,7 +32,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   String cipherText = "";
-  String key = "";
+  String shiftKey = "";
   String result = "";
   @override
   Widget build(BuildContext context) {
@@ -109,7 +109,7 @@ class _MyHomePageState extends State<MyHomePage> {
     final button = RaisedButton(
       onPressed: () {
         setState(() {
-          result = Vigenere.decrypt(cipherText, key);
+          result = Vigenere.decrypt(cipherText, shiftKey);
           print("rseult");
           print(result);
         });
@@ -142,16 +142,18 @@ class _MyHomePageState extends State<MyHomePage> {
       } else {
         cipherText = input;
       }
+      print("New cipher : " + cipherText);
     });
   }
 
   void _updateKeyText(String input) {
     setState(() {
       if (input == null || input.isEmpty) {
-        cipherText = '';
+        shiftKey = '';
       } else {
-        key = input;
+        shiftKey = input;
       }
+      print("New key : " + shiftKey);
     });
   }
 }
