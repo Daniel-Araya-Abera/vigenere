@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'Vigenere Decipher'),
     );
   }
 }
@@ -34,6 +34,8 @@ class _MyHomePageState extends State<MyHomePage> {
   String cipherText = "";
   String shiftKey = "";
   String result = "";
+  // bool _showCipherTextValidationError = false;
+  bool _showShiftKeyInputValidationError = false;
   @override
   Widget build(BuildContext context) {
     final cipherTextInputWidget = Padding(
@@ -46,7 +48,9 @@ class _MyHomePageState extends State<MyHomePage> {
             // style: Theme.of(context).textTheme.display1,
             decoration: InputDecoration(
               // labelStyle: Theme.of(context).textTheme.display1,
-              // errorText: _showValidationError ? 'Invalid number entered' : null,
+              // errorText: _showCipherTextValidationError
+              //     ? 'Invalid characters entered; Enter letters only'
+              //     : null,
               labelText: 'Cipher Text',
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(0.0),
@@ -69,6 +73,9 @@ class _MyHomePageState extends State<MyHomePage> {
             decoration: InputDecoration(
               // labelStyle: Theme.of(context).textTheme.display1,
               // errorText: _showValidationError ? 'Invalid number entered' : null,
+              errorText: _showShiftKeyInputValidationError
+                  ? 'Enter letters only'
+                  : null,
               labelText: 'Key',
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(0.0),
@@ -107,13 +114,15 @@ class _MyHomePageState extends State<MyHomePage> {
     );
 
     final button = RaisedButton(
-      onPressed: () {
-        setState(() {
-          result = Vigenere.decrypt(cipherText, shiftKey);
-          print("rseult");
-          print(result);
-        });
-      },
+      onPressed: _showShiftKeyInputValidationError
+          ? null
+          : () {
+              setState(() {
+                result = Vigenere.decrypt(cipherText, shiftKey);
+                print("rseult");
+                print(result);
+              });
+            },
       child: Text("Decipher"),
     );
 
@@ -150,8 +159,16 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       if (input == null || input.isEmpty) {
         shiftKey = '';
+        _showShiftKeyInputValidationError = false;
       } else {
-        shiftKey = input;
+        bool check = input.contains(new RegExp(r'[^a-zA-Z]'));
+        if (check) {
+          _showShiftKeyInputValidationError = true;
+          result = "";
+        } else {
+          shiftKey = input;
+          _showShiftKeyInputValidationError = false;
+        }
       }
       print("New key : " + shiftKey);
     });

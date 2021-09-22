@@ -13,19 +13,19 @@ class Vigenere {
     key = key.toUpperCase();
 
     for (int i = 0; i < cipherText.length; i++) {
-      bool first_check = starts.codeUnitAt(0) <= originalCipher.codeUnitAt(i) &&
+      bool firstCheck = starts.codeUnitAt(0) <= originalCipher.codeUnitAt(i) &&
           originalCipher.codeUnitAt(i) <= ends.codeUnitAt(0);
-      bool second_check =
+      bool secondCheck =
           starts.codeUnitAt(1) <= originalCipher.codeUnitAt(i) &&
               originalCipher.codeUnitAt(i) <= ends.codeUnitAt(1);
 
-      if (first_check || second_check) {
+      if (firstCheck || secondCheck) {
         var original = cipherText.codeUnitAt(i) - key.codeUnitAt(currKeyIndex);
         original = original % 26;
         currKeyIndex = (currKeyIndex + 1) % key.length;
         original += "A".codeUnitAt(0);
         var currRes = String.fromCharCode(original);
-        if (first_check) {
+        if (firstCheck) {
           res += currRes;
         } else {
           res += currRes.toLowerCase();
